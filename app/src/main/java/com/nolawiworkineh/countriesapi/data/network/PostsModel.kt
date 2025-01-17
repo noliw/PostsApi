@@ -1,4 +1,4 @@
-package com.nolawiworkineh.countriesapi.data
+package com.nolawiworkineh.countriesapi.data.network
 
 data class PostsModel(
     val userId: Int,
