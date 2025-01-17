@@ -1,7 +1,9 @@
 package com.nolawiworkineh.countriesapi.data.di
 
+import com.nolawiworkineh.countriesapi.data.PostsRepositoryImpl
 import com.nolawiworkineh.countriesapi.data.network.NetworkClient
 import com.nolawiworkineh.countriesapi.data.network.PostsApiService
+import com.nolawiworkineh.countriesapi.domain.PostsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,9 +21,14 @@ object PostsDataModule {
 
     @Provides
     @Singleton
-    fun providePostsApiService(retrofit: Retrofit): PostsApiService {
-        return retrofit.create(PostsApiService::class.java)
-    }
+    fun providePostsApiService(retrofit: Retrofit): PostsApiService =
+        retrofit.create(PostsApiService::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideRepositoryImplementation(postsApiService: PostsApiService): PostsRepository =
+        PostsRepositoryImpl(postsApiService)
 
 
 }
