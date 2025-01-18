@@ -69,7 +69,7 @@ fun PostsCard(
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(Color.Transparent, Color.Black),
-                            startY = 10f
+                            startY = 0f
                         )
                     )
                     .padding(16.dp),
