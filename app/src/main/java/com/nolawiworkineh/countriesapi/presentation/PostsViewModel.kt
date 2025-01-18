@@ -6,10 +6,7 @@ import com.nolawiworkineh.countriesapi.data.network.util.NetworkResponse
 import com.nolawiworkineh.countriesapi.domain.PostsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,11 +16,7 @@ class PostsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PostsState())
-    var state: StateFlow<PostsState> = _state.onStart {
-
-    }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PostsState())
-
+    val state: StateFlow<PostsState> = _state
 
     fun onAction(action: PostsAction) {
         when (action) {
@@ -44,7 +37,7 @@ class PostsViewModel @Inject constructor(
                 is NetworkResponse.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        // Assuming we add errorMessage in PostsState later
+                        errorMessage = result.message
                     )
                 }
                 else -> {
